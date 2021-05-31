@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class AuthCheck
+class RoleCheck
 {
     /**
      * Handle an incoming request.
@@ -16,9 +16,10 @@ class AuthCheck
      */
     public function handle(Request $request, Closure $next)
     {
-        if(!session()->has('LoggedUser') && ($request->path() != 'login' && $request->path() !='register')){
-            return redirect('login')->with('fail','Először be kell jelentkezni');
+        if(session()->has('LoggedUser') && (session()->get('LoggedUser')->role ==0 || session()->get('LoggedUser')->role ==2)){
+            return $next($request);
         }
-        return $next($request);
+        
+        return redirect('taskDesc');
     }
 }

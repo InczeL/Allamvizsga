@@ -39,7 +39,7 @@
                 <div class="collapse navbar-collapse" id="MobileMenu">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="/">Home</a>
+                            <a class="nav-link active" aria-current="page" href="/">Főoldal</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/taskDesc">Feladatok</a>
@@ -59,8 +59,11 @@
                                     width="30" height="30" class="rounded-circle">
                             </button>
                             <ul class="dropdown-menu dropdown-menu-start dropdown-menu-lg-end">
-                                <li><a class="dropdown-item" href="/profile">Profile</a></li>
-                                <li><a class="dropdown-item" href="{{ route('logout') }}">Log Out</a></li>
+                                <li><a class="dropdown-item" href="/profile">Profil</a></li>
+                                <li><a class="dropdown-item" href="{{ route('logout') }}">Kijelentkezés</a></li>
+                                @if (session()->get('LoggedUser')->role == 2 || session()->get('LoggedUser')->role == 0)
+                                    <li><a class="dropdown-item" href="{{route('newtask')}}">Feladataim</a></li>
+                                @endif
                             </ul>
                         </div>
                     @endif
@@ -88,6 +91,14 @@
 
     @yield('content')
     @livewireScripts
+    <script>
+        window.livewire.on('newTaskAdded',()=>{
+            $('#addTaskModal').modal('hide');
+        })
+        window.livewire.on('taskUpdated',()=>{
+            $('#updateTaskModal').modal('hide');
+        })
+    </script>
 </body>
 
 </html>

@@ -27,13 +27,17 @@ Route::post('/register',[UserController::class,'create']);
 Route::post('login',[UserController::class,'check'])->name('check');
 Route::get('/logout',[UserController::class,'logout'])->name('logout');
 
-Route::get('/profile',[UserController::class,'Profile']);
-Route::post('/profile',[UserController::class,'updateAvatar']);
 
-Route::get('/newtask',[UserController::class,'NewTask']);
-Route::post('/newtask',[MainController::class,'putTask'])->name('newtask');
+
+
 
 Route::group(['middleware'=>['AuthCheck']],function(){
     Route::get('/login',[UserController::class,'login'])->name('login');
     Route::get('/register',[UserController::class,'register'])->name('register');
+    Route::get('/profile',[UserController::class,'Profile']);
+    Route::post('/profile',[UserController::class,'updateAvatar']);
+});
+
+Route::group(['middleware'=>['RoleCheck']],function(){
+    Route::get('/newtask',[MainController::class,'newTask'])->name('newtask');
 });
