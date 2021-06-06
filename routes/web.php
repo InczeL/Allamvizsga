@@ -18,9 +18,9 @@ use App\Http\Controllers\UserController;
 Route::get('/taskDo',[MainController::class,'taskDo']);
 Route::post('taskDo',[MainController::class,'saveFile']);
 Route::get('/',[MainController::class,'index']);
-Route::get('/taskDesc',[MainController::class,'getTasks']);
+Route::get('/taskDesc',[MainController::class,'getTasks'])->name('getTasks');
 Route::get('/taskDetails/{id}',[MainController::class,'getTaskById']);
-Route::get('/taskDescF',[MainController::class,'getFilteredTask'])->name('getFilteredTask');
+//Route::get('/taskDescF',[MainController::class,'getFilteredTask'])->name('getFilteredTask');
 
 
 Route::post('/register',[UserController::class,'create']);

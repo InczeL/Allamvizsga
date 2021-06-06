@@ -99,7 +99,35 @@ class MainController extends Controller
     }
 
     function getTasks(){
-        $tasks = Task::paginate(10);
+        if(request()->has('class'))
+        {
+            $class = request('class');
+        }
+        else{
+            $class = '__';
+        }
+        if(request()->has('category'))
+        {
+            $category = request('category');
+        }
+        else{
+            $category = '__';
+        }
+        if(request()->has('subCategory'))
+        {
+            $subCategory = request('subCategory');
+        }
+        else{
+            $subCategory = '__';
+        }
+        $diff = request('difficulty');
+        $id = $class .$category.$subCategory.'__';
+        if($diff){
+            $tasks = Task::where('task_id','like',$id)->where('difficulty',$diff)->paginate(10);
+        }
+        else{
+            $tasks = Task::where('task_id','like',$id)->paginate(10);
+        }
         return view('taskDesc')->with('tasks',$tasks);
     }
 

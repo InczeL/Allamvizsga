@@ -1,5 +1,5 @@
 <div style="border:2px solid black">
-    <form action='{{ route('getFilteredTask') }}' method='GET'>
+    <form action='{{ route('getTasks') }}' method='GET'>
         @csrf
         <div class='form-group'>
             <label>Osztály: </label>
