@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\MainController;
+use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
 /*
 |--------------------------------------------------------------------------
@@ -15,21 +15,15 @@ use App\Http\Controllers\UserController;
 */
 
 
-Route::get('/taskDo',[MainController::class,'taskDo']);
-Route::post('taskDo',[MainController::class,'saveFile']);
-Route::get('/',[MainController::class,'index']);
-Route::get('/taskDesc',[MainController::class,'getTasks'])->name('getTasks');
-Route::get('/taskDetails/{id}',[MainController::class,'getTaskById']);
-//Route::get('/taskDescF',[MainController::class,'getFilteredTask'])->name('getFilteredTask');
-
+Route::post('taskDo',[TaskController::class,'CodeTesting']);
+Route::get('/',[TaskController::class,'index']);
+Route::get('/taskDesc',[TaskController::class,'getTasks'])->name('getTasks');
+Route::get('/taskDetails/{id}',[TaskController::class,'getTaskById']);
+Route::get('/taskResults/{id}',[TaskController::class,'taskResults'])->name('taskResults');
 
 Route::post('/register',[UserController::class,'create']);
 Route::post('login',[UserController::class,'check'])->name('check');
 Route::get('/logout',[UserController::class,'logout'])->name('logout');
-
-
-
-
 
 Route::group(['middleware'=>['AuthCheck']],function(){
     Route::get('/login',[UserController::class,'login'])->name('login');
@@ -39,5 +33,5 @@ Route::group(['middleware'=>['AuthCheck']],function(){
 });
 
 Route::group(['middleware'=>['RoleCheck']],function(){
-    Route::get('/newtask',[MainController::class,'newTask'])->name('newtask');
+    Route::get('/newtask',[TaskController::class,'newTask'])->name('newtask');
 });

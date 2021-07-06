@@ -10,8 +10,6 @@ class Filter extends Component
 {
     public $selectedClass = null;
     public $selectedCategory = null;
-   
-
     public $class = null;
     public $categories = null;
     public $subCategories =null;

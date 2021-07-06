@@ -85,41 +85,55 @@ class NewTask extends Component
         $this->task_id = $this->selectedClass.$this->selectedCategory.$this->selectedSubCategory.$taskIncId;
         switch($this->inputType){
             case "int":
-                $sampelArr= array('value' => array_map('intval',explode(' ',$this->sampelInput)),
-                          'result' => array_map('intval',explode(' ',$this->sampelOutput)));
-                $TestArr1= array('value' => array_map('intval',explode(' ',$this->input1)),
-                          'result' => array_map('intval',explode(' ',$this->output1)));
-                $TestArr2= array('value' => array_map('intval',explode(' ',$this->input2)),
-                          'result' => array_map('intval',explode(' ',$this->output2)));
-                $TestArr3= array('value' => array_map('intval',explode(' ',$this->input3)),
-                          'result' => array_map('intval',explode(' ',$this->output3)));
-                $TestArr4= array('value' => array_map('intval',explode(' ',$this->input4)),
-                          'result' => array_map('intval',explode(' ',$this->output4)));
+                $sampelArr= array('value' => array_map('intval',explode(' ',$this->sampelInput)));
+                $TestArr1= array('value' => array_map('intval',explode(' ',$this->input1)));
+                $TestArr2= array('value' => array_map('intval',explode(' ',$this->input2)));
+                $TestArr3= array('value' => array_map('intval',explode(' ',$this->input3)));
+                $TestArr4= array('value' => array_map('intval',explode(' ',$this->input4)));
                 break;
             case "float": 
-                $sampelArr= array('value' => array_map('floatval',explode(' ',$this->sampelInput)),
-                          'result' => array_map('floatval',explode(' ',$this->sampelOutput)));
-                $TestArr1= array('value' => array_map('floatval',explode(' ',$this->input1)),
-                          'result' => array_map('floatval',explode(' ',$this->output1)));
-                $TestArr2= array('value' => array_map('floatval',explode(' ',$this->input2)),
-                          'result' => array_map('floatval',explode(' ',$this->output2)));
-                $TestArr3= array('value' => array_map('floatval',explode(' ',$this->input3)),
-                          'result' => array_map('floatval',explode(' ',$this->output3)));
-                $TestArr4= array('value' => array_map('floatval',explode(' ',$this->input4)),
-                          'result' => array_map('floatval',explode(' ',$this->output4)));
+                $sampelArr= array('value' => array_map('floatval',explode(' ',$this->sampelInput)));
+                $TestArr1= array('value' => array_map('floatval',explode(' ',$this->input1)));
+                $TestArr2= array('value' => array_map('floatval',explode(' ',$this->input2)));
+                $TestArr3= array('value' => array_map('floatval',explode(' ',$this->input3)));
+                $TestArr4= array('value' => array_map('floatval',explode(' ',$this->input4)));
                 break;
             default : 
-                $sampelArr= array('value' => explode(' ',$this->sampelInput),
-                          'result' => explode(' ',$this->sampelOutput));
-                $TestArr1= array('value' => explode(' ',$this->input1),
-                          'result' => explode(' ',$this->output1));
-                $TestArr2= array('value' => explode(' ',$this->input2),
-                          'result' => explode(' ',$this->output2));
-                $TestArr3= array('value' => explode(' ',$this->input3),
-                          'result' => explode(' ',$this->output3));
-                $TestArr4= array('value' => explode(' ',$this->input4),
-                          'result' => explode(' ',$this->output4));
+                $sampelArr= array('value' => explode(' ',$this->sampelInput));
+                $TestArr1= array('value' => explode(' ',$this->input1));
+                $TestArr2= array('value' => explode(' ',$this->input2));
+                $TestArr3= array('value' => explode(' ',$this->input3));
+                $TestArr4= array('value' => explode(' ',$this->input4));
         }
+        switch($this->outputType){
+            case "int":
+                $sampelOut = array('result' => array_map('intval',explode(' ',$this->sampelOutput)));
+                $TestOut1 = array('result' => array_map('intval',explode(' ',$this->output1)));
+                $TestOut2 = array('result' => array_map('intval',explode(' ',$this->output2)));
+                $TestOut3 = array('result' => array_map('intval',explode(' ',$this->output3)));
+                $TestOut4 = array('result' => array_map('intval',explode(' ',$this->output4)));
+                break;
+            case "float":
+                $sampelOut = array('result' => array_map('floatval',explode(' ',$this->sampelOutput)));
+                $TestOut1 = array('result' => array_map('floatval',explode(' ',$this->output1)));
+                $TestOut2 = array('result' => array_map('floatval',explode(' ',$this->output2)));
+                $TestOut3 = array('result' => array_map('floatval',explode(' ',$this->output3)));
+                $TestOut4 = array('result' => array_map('floatval',explode(' ',$this->output4)));
+                break;
+            default :
+                $sampelOut = array('result' => explode(' ',$this->sampelOutput));
+                $TestOut1 = array('result' => explode(' ',$this->output1));
+                $TestOut2 = array('result' => explode(' ',$this->output2));
+                $TestOut3 = array('result' => explode(' ',$this->output3));
+                $TestOut4 = array('result' => explode(' ',$this->output4));
+                break;
+        }
+        $sampelArr= array_merge($sampelArr,$sampelOut);
+        $TestArr1= array_merge($TestArr1,$TestOut1);
+        $TestArr2= array_merge($TestArr2,$TestOut2);
+        $TestArr3= array_merge($TestArr3,$TestOut3);
+        $TestArr4= array_merge($TestArr4,$TestOut4);
+        
         $sampelJson = json_encode($sampelArr);
         $tetsJson1 = json_encode($TestArr1);
         $tetsJson2 = json_encode($TestArr2);
@@ -172,9 +186,6 @@ class NewTask extends Component
         $this->task_id = $task->task_id;
         $this->taskName = $task->task_name;
         $this->taskDesc = $task->task_desc;
-        /*$this->selectedClass = substr($task->task_id,0,2);
-        $this->selectedCategory =substr($task->task_id,2,2);
-        $this->selectedSubCategory = substr($task->task_id,4,2);*/
         $this->difficulty = $task->difficulty;
 
         $sampelTest->test_value= json_decode( $sampelTest->test_value);
@@ -219,43 +230,58 @@ class NewTask extends Component
             $task = Task::where('task_id',$this->task_id)->first();
             $sampelTest = SampelTest::where('task_id',$this->task_id)->first();
             $tests = Test::where('task_id',$this->task_id)->get();
+            
             switch($this->inputType){
                 case "int":
-                    $sampelArr= array('value' => array_map('intval',explode(' ',$this->sampelInput)),
-                              'result' => array_map('intval',explode(' ',$this->sampelOutput)));
-                    $TestArr1= array('value' => array_map('intval',explode(' ',$this->input1)),
-                              'result' => array_map('intval',explode(' ',$this->output1)));
-                    $TestArr2= array('value' => array_map('intval',explode(' ',$this->input2)),
-                              'result' => array_map('intval',explode(' ',$this->output2)));
-                    $TestArr3= array('value' => array_map('intval',explode(' ',$this->input3)),
-                              'result' => array_map('intval',explode(' ',$this->output3)));
-                    $TestArr4= array('value' => array_map('intval',explode(' ',$this->input4)),
-                              'result' => array_map('intval',explode(' ',$this->output4)));
+                    $sampelArr= array('value' => array_map('intval',explode(' ',$this->sampelInput)));
+                    $TestArr1= array('value' => array_map('intval',explode(' ',$this->input1)));
+                    $TestArr2= array('value' => array_map('intval',explode(' ',$this->input2)));
+                    $TestArr3= array('value' => array_map('intval',explode(' ',$this->input3)));
+                    $TestArr4= array('value' => array_map('intval',explode(' ',$this->input4)));
                     break;
                 case "float": 
-                    $sampelArr= array('value' => array_map('floatval',explode(' ',$this->sampelInput)),
-                              'result' => array_map('floatval',explode(' ',$this->sampelOutput)));
-                    $TestArr1= array('value' => array_map('floatval',explode(' ',$this->input1)),
-                              'result' => array_map('floatval',explode(' ',$this->output1)));
-                    $TestArr2= array('value' => array_map('floatval',explode(' ',$this->input2)),
-                              'result' => array_map('floatval',explode(' ',$this->output2)));
-                    $TestArr3= array('value' => array_map('floatval',explode(' ',$this->input3)),
-                              'result' => array_map('floatval',explode(' ',$this->output3)));
-                    $TestArr4= array('value' => array_map('floatval',explode(' ',$this->input4)),
-                              'result' => array_map('floatval',explode(' ',$this->output4)));
+                    $sampelArr= array('value' => array_map('floatval',explode(' ',$this->sampelInput)));
+                    $TestArr1= array('value' => array_map('floatval',explode(' ',$this->input1)));
+                    $TestArr2= array('value' => array_map('floatval',explode(' ',$this->input2)));
+                    $TestArr3= array('value' => array_map('floatval',explode(' ',$this->input3)));
+                    $TestArr4= array('value' => array_map('floatval',explode(' ',$this->input4)));
                     break;
                 default : 
-                    $sampelArr= array('value' => explode(' ',$this->sampelInput),
-                              'result' => explode(' ',$this->sampelOutput));
-                    $TestArr1= array('value' => explode(' ',$this->input1),
-                              'result' => explode(' ',$this->output1));
-                    $TestArr2= array('value' => explode(' ',$this->input2),
-                              'result' => explode(' ',$this->output2));
-                    $TestArr3= array('value' => explode(' ',$this->input3),
-                              'result' => explode(' ',$this->output3));
-                    $TestArr4= array('value' => explode(' ',$this->input4),
-                              'result' => explode(' ',$this->output4));
+                    $sampelArr= array('value' => explode(' ',$this->sampelInput));
+                    $TestArr1= array('value' => explode(' ',$this->input1));
+                    $TestArr2= array('value' => explode(' ',$this->input2));
+                    $TestArr3= array('value' => explode(' ',$this->input3));
+                    $TestArr4= array('value' => explode(' ',$this->input4));
             }
+            switch($this->outputType){
+                case "int":
+                    $sampelOut = array('result' => array_map('intval',explode(' ',$this->sampelOutput)));
+                    $TestOut1 = array('result' => array_map('intval',explode(' ',$this->output1)));
+                    $TestOut2 = array('result' => array_map('intval',explode(' ',$this->output2)));
+                    $TestOut3 = array('result' => array_map('intval',explode(' ',$this->output3)));
+                    $TestOut4 = array('result' => array_map('intval',explode(' ',$this->output4)));
+                    break;
+                case "float":
+                    $sampelOut = array('result' => array_map('floatval',explode(' ',$this->sampelOutput)));
+                    $TestOut1 = array('result' => array_map('floatval',explode(' ',$this->output1)));
+                    $TestOut2 = array('result' => array_map('floatval',explode(' ',$this->output2)));
+                    $TestOut3 = array('result' => array_map('floatval',explode(' ',$this->output3)));
+                    $TestOut4 = array('result' => array_map('floatval',explode(' ',$this->output4)));
+                    break;
+                default :
+                    $sampelOut = array('result' => explode(' ',$this->sampelOutput));
+                    $TestOut1 = array('result' => explode(' ',$this->output1));
+                    $TestOut2 = array('result' => explode(' ',$this->output2));
+                    $TestOut3 = array('result' => explode(' ',$this->output3));
+                    $TestOut4 = array('result' => explode(' ',$this->output4));
+                    break;
+            }
+            $sampelArr= array_merge($sampelArr,$sampelOut);
+            $TestArr1= array_merge($TestArr1,$TestOut1);
+            $TestArr2= array_merge($TestArr2,$TestOut2);
+            $TestArr3= array_merge($TestArr3,$TestOut3);
+            $TestArr4= array_merge($TestArr4,$TestOut4);
+
             $sampelJson = json_encode($sampelArr);
             $tetsJson1 = json_encode($TestArr1);
             $tetsJson2 = json_encode($TestArr2);
@@ -294,10 +320,12 @@ class NewTask extends Component
             $this->emit('taskUpdated');
         }
     }
+    public function getResultOfTask($id){
+        return redirect()->route('taskResults',[$id]);
+    }
     public function render()
     {
-        $tasks = DB::table('tasks')->select('*',
-        Db::raw('GROUP_CONCAT(tests.test_value SEPARATOR ";") as test_values'))
+        $tasks = DB::table('tasks')->select('*',Db::raw('GROUP_CONCAT(tests.test_value SEPARATOR ";") as test_values'))
         ->join('tests','tasks.task_id',"=",'tests.task_id')
         ->join('sampel_tests','tasks.task_id','=','sampel_tests.task_id')
         ->groupBy('tasks.task_id')

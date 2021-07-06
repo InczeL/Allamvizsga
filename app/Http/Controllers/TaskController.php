@@ -10,19 +10,22 @@ use App\Models\Result;
 use App\Models\SampelTest;
 use File;
 
-class MainController extends Controller
+class TaskController extends Controller
 {
     public function index(){
         return view('home');
     }
-    public function taskDo(){
-        return view('taskDo');
-    }
     public function taskDesc(){
         return view('taskDesc');
     }
+    function newTask(){
+        return view('newTask');
+    }
+    function taskResults($id){
+        return view('taskResults')->with('id',$id);
+    }
     
-    public function saveFile(){
+    public function CodeTesting(){
         
         $code= request('code');
         $result;
@@ -40,16 +43,16 @@ class MainController extends Controller
             1=>array('pipe', 'w'), //stdout
             2 => array("file", $errorFile,"w+") //stderr
          );
-        
-        $query =  Test::where('task_id',$id)->get();
+    
+        $tests =  Test::where('task_id',$id)->get();
         $command= 'g++ -Wall -std=c++14 ' . $fileName .' -o ' .$procName;
         $compiler = proc_open( $command , $descriptorspec, $pipes, null, null);
         proc_close($compiler);
         $correct=true;
         if(filesize($errorFile)==0){
-            foreach($query as $q){
+            foreach($tests as $test){
                 $exe=proc_open($procName,$descriptorspec,$pipes,null,null);
-                $json=json_decode($q->test_value);
+                $json=json_decode($test->test_value);
                 $variabls= $json->value;
                 $result= $json->result;
                 foreach($variabls as $value){
@@ -72,6 +75,7 @@ class MainController extends Controller
                     fclose($pipes[1]);
                 }
                 else{
+                    proc_close($exe);
                     break;
                 }
                 proc_close($exe);
@@ -123,10 +127,20 @@ class MainController extends Controller
         $diff = request('difficulty');
         $id = $class .$category.$subCategory.'__';
         if($diff){
-            $tasks = Task::where('task_id','like',$id)->where('difficulty',$diff)->paginate(10);
+            $tasks = Task::where('task_id','like',$id)
+            ->where('difficulty',$diff)
+            ->paginate(10)
+            ->appends('difficulty',$diff)
+            ->appends('class',$class)
+            ->appends('category',$category)
+            ->appends('subCategory',$subCategory);
         }
         else{
-            $tasks = Task::where('task_id','like',$id)->paginate(10);
+            $tasks = Task::where('task_id','like',$id)
+            ->paginate(10)
+            ->appends('class',$class)
+            ->appends('category',$category)
+            ->appends('subCategory',$subCategory);
         }
         return view('taskDesc')->with('tasks',$tasks);
     }
@@ -136,30 +150,11 @@ class MainController extends Controller
         $test = SampelTest::where('task_id',$id)->first(); 
         if(session()->has('LoggedUser')){
             $result = Result::where('task_id',$id)->where('user_id',session()->get('LoggedUser')->id)->first();
+            return view('TaskDetails')->with('task',$task)->with('test',$test)->with('taskResult',$result);
         }
         else{
-            $result = Result::where('task_id',$id)->first();
+            return view('TaskDetails')->with('task',$task)->with('test',$test);
         }
-        return view('TaskDetails')->with('task',$task)->with('test',$test)->with('taskResult',$result);
-    }
-
-    function getFilteredTask(){
-
-        $class = request('class');
-        $category = request('category');
-        $subCategory = request('subcategory');
-        $diff = request('difficulty');
-        $id = $class .$category.$subCategory.'__';
-        $tasks = Task::where('task_id','like',$id)->paginate(10);
-        if($diff){
-            $tasks = Task::where('task_id','like',$id)->where('difficulty',$diff)->paginate(10);
-        }
-        else{
-            $tasks = Task::where('task_id','like',$id)->paginate(10);
-        }
-        return view('taskDesc')->with('tasks',$tasks);
-    }
-    function newTask(){
-        return view('newTask');
+        
     }
 }

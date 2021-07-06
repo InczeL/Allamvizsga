@@ -16,11 +16,6 @@
                 <input type="email" name="email" class="form-control" id="email" value="{{old('email')}}" />
                 <span class="text-danger" >@error('email'){{$message}}@enderror </span>
             </div>
-            <!--<div class="form-group m-auto " style="width: 20%">
-                <label>Felhasználónév</label>
-                <input type="text" name="user_name" id="user_name" class="form-control" value="{{old('user_name')}}"/>
-                <span class="text-danger" >@error('user_name'){{$message}}@enderror </span>
-            </div>-->
             <div class="form-group m-auto " style="width: 20%">
                 <label>Jelszó</label>
                 <input type="password" name="password" id="password" class="form-control"/>

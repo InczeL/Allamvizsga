@@ -1,7 +1,8 @@
-<div style="border:2px solid black">
+<div class="filter">
+    <h3 class="mx-3">Válaszd ki, a számodra megfelelő feladatokat</h3>
     <form action='{{ route('getTasks') }}' method='GET'>
         @csrf
-        <div class='form-group'>
+        <div class='form-group mx-3 '>
             <label>Osztály: </label>
             <select class='form-control' name='class' wire:model="selectedClass">
                 <option value='__'>__</option>
@@ -10,8 +11,8 @@
                 <option value='11'>XI Osztály</option>
             </select>
         </div>
-        <div class='form-group'>
-            <label>Kategóriák: </label>
+        <div class='form-group mx-3'>
+            <label>Kategória: </label>
             <select class='form-control' name="category" wire:model="selectedCategory">
                 <option value='__'>__</option>
                 @if (!is_null($categories))
@@ -21,8 +22,8 @@
                 @endif
             </select>
         </div>
-        <div class='form-group'>
-            <label>Alkategóriák: </label>
+        <div class='form-group mx-3'>
+            <label>Alkategória: </label>
             <select class='form-control' name="subcategory">
                 <option value='__' selected="selected">__</option>
                 @if (!is_null($subCategories))
@@ -32,7 +33,7 @@
                 @endif
             </select>
         </div>
-        <div class='form-group'>
+        <div class='form-group mx-3 mt-2'>
             <label>Nehézség:</label>
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="difficulty" id="inlineRadio1" value=1>
@@ -47,12 +48,14 @@
                 <label class="form-check-label" for="inlineRadio3">Nehéz</label>
             </div>
         </div>
-            <button type="submit" class="btn btn-success  my-3">
+        <div class="form-group mx-3 mb-3 d-flex flex-row-reverse">
+            <button type="submit" class="btn btn-success mt-2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                     class="bi bi-funnel-fill" viewBox="0 0 16 16">
                     <path
                         d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2z" />
-                </svg> Keresés
+                </svg> Feladatok Szűrése
             </button>
+        </div>
     </form>
 </div>

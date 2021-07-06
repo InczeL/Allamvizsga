@@ -10,28 +10,17 @@
         integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ asset('css/myapp.css') }}">
     <title>@yield("title")</title>
-    <style>
-        .btn:focus {
-            outline: none;
-            box-shadow: none;
-        }
-
-        .navbar-toggler:focus {
-            outline: none;
-            box-shadow: none;
-        }
-
-    </style>
     @yield('asset')
     @livewireStyles
 </head>
 
 <body>
     <header>
-    
         <nav class="navbar navbar-expand-lg navbar-dark">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">Test</a>
+                <a class="navbar-brand" href="/">
+                    <img  class="navbar-brand" src="/Logo.svg" width="100" height="40">
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#MobileMenu"
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -39,24 +28,21 @@
                 <div class="collapse navbar-collapse" id="MobileMenu">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="/">Főoldal</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link" href="/taskDesc">Feladatok</a>
                         </li>
                     </ul>
                     @if (!session()->has('LoggedUser'))
                         <div>
                             <button class="btn btn-success"><a class="nav-link"
-                                    href="{{ route('login') }}">Login</a></button>
+                                    href="{{ route('login') }}">Bejelentkezés</a></button>
                             <button class="btn btn-success"><a class="nav-link"
-                                    href="{{ route('register') }}">Registetr</a></button>
+                                    href="{{ route('register') }}">Regisztráció</a></button>
                         </div>
                     @else
                         <div class="navbar">
                             <button class="btn dropdown-toggle me-5" type="button" data-bs-toggle="dropdown">
-                                <img src="avatars/{{session()->get('LoggedUser')->profile_img}}"
-                                    width="30" height="30" class="rounded-circle">
+                                <img src="/avatars/{{session()->get('LoggedUser')->profile_img}}"
+                                    width="30" height="30" class="rounded-circle"/>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-start dropdown-menu-lg-end">
                                 <li><a class="dropdown-item" href="/profile">Profil</a></li>
@@ -70,8 +56,6 @@
                 </div>
             </div>
         </nav>
-
-
     </header>
     
 
@@ -90,6 +74,7 @@
     </script>
 
     @yield('content')
+
     @livewireScripts
     <script>
         window.livewire.on('newTaskAdded',()=>{
@@ -99,6 +84,7 @@
             $('#updateTaskModal').modal('hide');
         })
     </script>
+
 </body>
 
 </html>

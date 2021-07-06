@@ -1,4 +1,13 @@
 /*main*/
+.btn:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.navbar-toggler:focus {
+    outline: none;
+    box-shadow: none;
+}
 body{
     background-color:#72a589;
 }
@@ -40,4 +49,69 @@ p {
 color: white;
 background-color: #256e43 !Important;
 border: solid 1px #256e43 !Important;
+}
+.code-are{
+    display: block;
+    margin-right: auto;
+    margin-left : auto;
+    background-color:#72a589; 
+    resize: none;
+    width:97%;
+    padding: 16px;
+}
+
+/*card*/
+.task-card{
+    height: 250px;
+    background-color: #72a589;
+    border:2px solid black   
+}
+.card{
+    background-color: #72a589;
+    border:2px solid black   
+}
+
+.scrollable{
+    overflow-y: auto;
+    max-height: 150px;
+    float: right;
+  }
+div.card{
+    border-radius: 10px;
+    padding: 16px;
+}
+a.card-click{
+    text-decoration: none; 
+    color:inherit;
+}
+.task-class{
+    background-color: #60D4FF;
+    margin-right: 8px;
+    border: 2px solid black;
+    border-radius: 10px;
+    float: left;
+}
+.task-difficulty-easy{
+    background-color: #54E893;
+    border: 2px solid black;
+    border-radius: 10px;
+    float: left;
+}
+.task-difficulty-medium{
+    background-color: #FFE600;
+    border: solid black;
+    border-radius: 10px;
+    float: left;
+}
+.task-difficulty-hard{
+    background-color: #FF8888;
+    border: 2px solid black;
+    border-radius: 10px;
+    float: left;
+}
+
+div.filter{
+    border:2px solid black;
+    border-radius: 10px;
+    
 }

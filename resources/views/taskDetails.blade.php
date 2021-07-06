@@ -28,20 +28,20 @@ $helloWord ='
             
         </ul>
         <div class="tab-content">
-            <div class="tab-pane active" id="leiras">
+            <div class="tab-pane active mx-3" id="leiras">
                 <h2>Leiras:</h2>
                 <p>{{ $task->task_desc }}</p>
                 <h2> Bemeneti adatok:</h2>
                 <p>
-                    <?php foreach ($variabls as $key) { ?>
-                    {{ $key }}
-                    <?php } ?>
+                    @foreach ($variabls as $variabel)
+                        {{ $variabel }}
+                    @endforeach
                 </p>
                 <h2>Várt eredmény :</h2>
                 <p>
-                    <?php foreach ($result as $key) { ?>
-                    {{ $key }}
-                    <?php } ?>
+                    @foreach ($result as $item)
+                    {{ $item }}
+                    @endforeach
                 </p>
             </div>
 
@@ -56,30 +56,25 @@ $helloWord ='
                                 {{$helloWord}}
                             @endif   
                         </textarea>
-
                         <textarea class="mt-2" name="result" id="result" rows="2"  style="resize: none;"  disabled>
                                 {{Session::get('response')}}
                             </textarea>
                         <form class="mt-1" id="task"
-                            action="/taskDo?id=<?php echo $task->task_id; ?>" method="POST">
+                            action="/taskDo?id=@php echo $task->task_id; @endphp" method="POST">
                             @csrf
                             @if (session()->has('LoggedUser'))
                                 <button type="submit" class="btn btn-success ">Beküldés</button>
                             @else
                                 <button type="submit" class="btn btn-success  disabled">Beküldés</button>
                             @endif
-                            
                         </form>
                     </div>
                 </div>
             </div>
             <div class="tab-pane " id="megoldasok">
-                @if(empty($taskResult))
-                    @livewire('task-results',['task_id' => $task->task_id])
-                @else
+                @if(!empty($taskResult))
                     @livewire('task-results',['task_id' => $task->task_id,'score'=>$taskResult->score])
                 @endif
-               
             </div>
         </div>
     </div>
